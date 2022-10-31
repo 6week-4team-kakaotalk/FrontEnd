@@ -21,8 +21,7 @@ const Main = () => {
         {/* 상단 메뉴 */}
         <TopBox>
           <TopText>친구</TopText>
-          <TopButton onClick={handModal}><i class="fa-solid fa-user-plus"></i></TopButton>
-
+          <TopButton onClick={handModal}><i className="fa-solid fa-user-plus"></i></TopButton>
 
           {/* 모달창 */}
           <MainModal isOpen={modal} onRequestClose={() => setModal(false)}
@@ -41,7 +40,7 @@ const Main = () => {
           >
             <ModalBox>
               <div><h3>친구추가</h3></div>
-              <MButton onClick={handModal}><i class="fa-solid fa-x"></i></MButton>
+              <MButton onClick={handModal}><i className="fa-solid fa-x"></i></MButton>
             </ModalBox>
 
             <ModalSearch>

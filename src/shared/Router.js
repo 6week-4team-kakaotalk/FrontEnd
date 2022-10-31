@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Main from "../pages/Main";
-import Chat from "../pages/Chat";
+import ChatList from "../pages/ChatList";
+import ChatRoom from "../pages/ChatRoom";
 
 
 const Router = () => {
@@ -13,9 +14,10 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/chat" element={<Chat />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/chatlist" element={<ChatList />} />
+        <Route path="/chatroom" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,7 +14,7 @@ const Navigation = () => {
         <i className="fa-solid fa-user"></i>
 
       </Fbutton>
-      <Cbutton onClick={() => { navigate('/chat') }}>
+      <Cbutton onClick={() => { navigate('/chatlist') }}>
         <i className="fa-solid fa-comment"></i>
       </Cbutton>
       <Lbutton><i className="fa-solid fa-right-from-bracket"></i></Lbutton>
