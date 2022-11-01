@@ -1,10 +1,41 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { IoChevronBackSharp } from 'react-icons/io5';
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 
 const ChatRoom = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+
+  // const headers = {
+  //   authorization: window.localStorage.getItem('authorization'),
+  // };
+
+  // const roomId = useParams();
+  // const socket = new SockJS(`ws://54.180.141.164/api/rooms/${roomId}`);
+
+  // const client = Stomp.over(socket); //서버연결, 메세지 전송, 상대방 구독 관련 값 추가 할당을 위해 사용
+
+  useEffect(() => {}, []);
+
+  // //연결&구독
+  // function onConneted() {
+  //   try {
+  //     client.connect(headers, () => {
+  //       client.subscribe(
+  //         `/api/rooms/${roomId}`,
+  //         (data) => {
+  //           const newMessage = JSON.parse(data.body);
+  //           dispatch(eventname(newMessage));
+  //         },
+  //         headers
+  //       );
+  //     });
+  //   } catch (error) {}
+  // }
 
   return (
     <Wrapper>

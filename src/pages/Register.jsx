@@ -1,10 +1,10 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 //import { signUp } from "../_redux/modules/login_signup";
-import styled from "styled-components";
-import { ReactComponent as Xbutton } from "../assets/x-circle-fill.svg";
-import { signUp } from "../_redux/modules/memberSlice";
+import styled from 'styled-components';
+import { ReactComponent as Xbutton } from '../assets/x-circle-fill.svg';
+import { signUp } from '../_redux/modules/memberSlice';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,9 +20,10 @@ const Register = () => {
   const userInfo = {
     loginId: loginId,
     password: password,
-    //passwordConfirm: passwordConfirm,
-    nickname: nickName,
-    phoneNumber: phoneNumber
+    passwordConfirm: passwordConfirm,
+    nickName: nickName,
+    phoneNumber: phoneNumber,
+    admin: false,
   };
 
   // 유효성 검사
@@ -44,10 +45,10 @@ const Register = () => {
       if (checkId && checkPassword && checkNickname && checkPhoneNumber) {
         dispatch(signUp(userInfo));
       } else {
-        alert("입력란을 확인해주세요");
+        alert('입력란을 확인해주세요');
       }
     } else {
-      alert("비밀번호가 일치하지 않습니다");
+      alert('비밀번호가 일치하지 않습니다');
     }
   };
 
@@ -67,7 +68,7 @@ const Register = () => {
         <p>아이디</p>
         <InputContainer>
           <Input
-            placeholder="아이디 입력"
+            placeholder="아이디 입력" //이메일
             name="loginName"
             type="text"
             value={loginId}
@@ -83,8 +84,8 @@ const Register = () => {
               width="20"
               height="20"
               fill="#e2e2e2"
-              display={display(loginId) ? "block" : "none"}
-              onClick={(e) => setLoginId("")}
+              display={display(loginId) ? 'block' : 'none'}
+              onClick={(e) => setLoginId('')}
             />
           </InputButton>
         </InputContainer>
@@ -108,8 +109,8 @@ const Register = () => {
               width="20"
               height="20"
               fill="#e2e2e2"
-              display={display(password) ? "block" : "none"}
-              onClick={(e) => setPassword("")}
+              display={display(password) ? 'block' : 'none'}
+              onClick={(e) => setPassword('')}
             />
           </InputButton>
         </InputContainer>
@@ -129,8 +130,8 @@ const Register = () => {
               width="20"
               height="20"
               fill="#e2e2e2"
-              display={display(passwordConfirm) ? "block" : "none"}
-              onClick={(e) => setPasswordConfirm("")}
+              display={display(passwordConfirm) ? 'block' : 'none'}
+              onClick={(e) => setPasswordConfirm('')}
             />
           </InputButton>
         </InputContainer>
@@ -150,8 +151,8 @@ const Register = () => {
               width="20"
               height="20"
               fill="#e2e2e2"
-              display={display(nickName) ? "block" : "none"}
-              onClick={(e) => setNickName("")}
+              display={display(nickName) ? 'block' : 'none'}
+              onClick={(e) => setNickName('')}
             />
             <p>{nickName.length}/12</p>
           </InputButton2>
@@ -165,23 +166,21 @@ const Register = () => {
             name="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            maxLength="20"
+            maxLength="20" //숫자 11자리
           />
           <InputButton2>
             <Xbutton
               width="20"
               height="20"
               fill="#e2e2e2"
-              display={display(phoneNumber) ? "block" : "none"}
-              onClick={(e) => setPhoneNumber("")}
+              display={display(phoneNumber) ? 'block' : 'none'}
+              onClick={(e) => setPhoneNumber('')}
             />
             <p>{phoneNumber.length}/20</p>
           </InputButton2>
         </InputContainer>
       </InputWarp>
-      <Button onClick={onClick}>
-        회원가입
-      </Button>
+      <Button onClick={onClick}>회원가입</Button>
     </MainContainer>
   );
 };
@@ -252,7 +251,7 @@ const Input = styled.input`
   &:focus {
     border-bottom: 1px solid black;
   }
-  
+
   ::placeholder,
   ::-webkit-input-placeholder {
     color: #d3d3d3;
@@ -267,14 +266,13 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   background-color: #4a403a;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background-color: #302a26;
     font-weight: 600;
   }
-
 `;
 
 export default Register;

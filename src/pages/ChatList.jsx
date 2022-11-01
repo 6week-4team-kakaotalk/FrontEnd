@@ -61,8 +61,8 @@ const ChatList = () => {
           <h2>대화상대 선택</h2>
           <Search placeholder="이름 검색"></Search>
           <h4>친구</h4>
-
-          <ChatsBox>
+          {/* 친구를 선택하여 채팅방 입장하게됌 (roomid생성) */}
+          <ChatsBox onDoubleClick={() => navigate('/chatroom')}>
             <ProBox>
               <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
             </ProBox>
