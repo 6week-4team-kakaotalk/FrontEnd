@@ -1,19 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState } from 'react';
 import ReactModal from 'react-modal';
 import { BsXCircle, BsChat } from 'react-icons/bs';
+import { getChatRoom } from "../_redux/modules/chatSlice";
+import { useParams } from "react-router-dom";
+//import queryString from "query-string";
 
 const ChatList = () => {
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // const query = queryString.parse(location.search);
+  //qury.id
+
+  const chatRoom = useSelector((state) => state.chat.chatRoom)
+
+  // console.log(Object.entries(chatRoom.id)[7])
+
+
+  //Object.entries()
+  // console.log(roomId)
+
+
   const handleModal = () => {
     setModal(!modal);
   };
 
+  useEffect(() => {
+    dispatch(getChatRoom());
+  }, [dispatch]);
+
+  // if (!chatRoom) return;
+  console.log(chatRoom)
+
+
+
+
+  let chatNumber = 0;
+  let arr = [];
+
+
+  for (let i = 1; i <= chatRoom.length; i++) {
+    chatNumber++;
+    arr.push(chatNumber)
+  }
+  //console.log(arr)
+
   return (
     <div>
+
+      {
+
+      }
       <Headerdiv>
         <h3>채팅</h3>
 
@@ -82,25 +123,22 @@ const ChatList = () => {
         </ReactModal>
       </Headerdiv>
 
-      <ChatsBox onDoubleClick={() => navigate('/chatroom')}>
-        <ProBox>
-          <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-        </ProBox>
-        <div>
-          <ChatName>채팅명</ChatName>
-          <LastChat>채팅내용</LastChat>
-        </div>
-      </ChatsBox>
 
-      <ChatsBox onDoubleClick={() => navigate('/chatroom')}>
-        <ProBox>
-          <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-        </ProBox>
-        <div>
-          <ChatName>채팅명</ChatName>
-          <LastChat>채팅내용</LastChat>
-        </div>
-      </ChatsBox>
+
+      {chatRoom.map((room, index) => {
+        return (
+          //query.id
+          <ChatsBox key={index} onDoubleClick={() => navigate(`/chatroom/${room.id}`)}>
+            <ProBox>
+              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+            </ProBox>
+            <div>
+              <ChatName>{room.name}</ChatName>
+              {/* <LastChat>-</LastChat> */}
+            </div>
+          </ChatsBox>
+        )
+      })}
     </div>
   );
 };

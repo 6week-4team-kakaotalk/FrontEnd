@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ReactComponent as Chatfilled } from "../assets/chat-fill.svg";
 // import { login } from "../_redux/modules/login_signup";
 import { signIn } from "../_redux/modules/memberSlice";
+import SignInUpLayout from "../components/layout/SignInUpLayout";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
 
   //유효성 검사
   const checkID = loginId.length >= 4 && loginId.length <= 12;
-  const checkpassword = password.length >= 8 && password.length <= 32;
+  const checkpassword = password.length >= 6 && password.length <= 32;
 
   //유효성 통과시 버튼&폰트 색상 변경
   let setColor = "";
@@ -47,7 +48,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <SignInUpLayout>
       <MainContainer>
         <LogoWrap>
           <Chatfilled width="100" height="100" fill="#4A403A"></Chatfilled>
@@ -78,7 +79,7 @@ const Login = () => {
           </p>
         </TextBox>
       </MainContainer>
-    </div>
+    </SignInUpLayout>
   );
 };
 
@@ -131,7 +132,7 @@ const Input = styled.input`
 
 //입력버튼
 const Button = styled.button`
-  min-width: 197px;
+  min-width: 200px;
   padding: 12px;
   margin-top: 10px;
   border: none;

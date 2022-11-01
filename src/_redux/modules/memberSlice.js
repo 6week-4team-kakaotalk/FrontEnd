@@ -16,7 +16,7 @@ export const signUp = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload)
     try {
-      const { data } = await axios.post("http://15.164.103.174/api/members/signup", payload);
+      const { data } = await axios.post("https://jossiya.shop/api/member/signup", payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -34,11 +34,11 @@ export const signIn = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
-      const { data } = await axios.post('http://15.164.103.174/api/members/signin', payload, config)
+      const { data } = await axios.post('https://jossiya.shop/api/member/login', payload, config)
         .then((res) => {
           if (res.data.success) {
             localStorage.setItem('authorization', res.request.getResponseHeader('authorization'));
-            localStorage.setItem('refresh-Token', res.request.getResponseHeader('refresh_Token'));
+            localStorage.setItem('refresh-Token', res.request.getResponseHeader('refresh-Token'));
             alert('로그인에 성공하였습니다.');
             window.location.replace('/');
           }
@@ -59,10 +59,10 @@ export const signOut = createAsyncThunk(
         headers: {
           'Content-Type': 'application/json',
           'authorization': localStorage.getItem('authorization'),
-          'refresh-Token': localStorage.getItem('refresh_Token')
+          'refresh-Token': localStorage.getItem('refresh-Token')
         },
       };
-      const { data } = await axios.post("http://15.164.103.174/api/auth/members/logout", payload, config);
+      const { data } = await axios.post("https://jossiya.shop/api/member/logout", payload, config);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
+import { signOut } from '../../_redux/modules/memberSlice';
+import { useDispatch } from 'react-redux';
+
 //import { ReactComponent as Personfill } from "../assets/person-fill.svg";
 //import { ReactComponent as Chatfill } from "../assets/chat-fill.svg";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const [fbutton, setFbutton] = useState(true);
+  //const [fbutton, setFbutton] = useState(true);
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("authorization");
+
+  const logOut = () => {
+    dispatch(signOut({}))
+    localStorage.clear();
+    alert("로그아웃 되었습니다.")
+    navigate('/')
+  }
 
   return (
     <NavContainer>
@@ -17,7 +30,7 @@ const Navigation = () => {
       <Cbutton onClick={() => { navigate('/chatlist') }}>
         <i className="fa-solid fa-comment"></i>
       </Cbutton>
-      <Lbutton><i className="fa-solid fa-right-from-bracket"></i></Lbutton>
+      <Lbutton onClick={logOut}><i className="fa-solid fa-right-from-bracket"></i></Lbutton>
     </NavContainer>
   )
 }

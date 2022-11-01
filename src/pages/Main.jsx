@@ -44,7 +44,8 @@ const Main = () => {
             </ModalBox>
 
             <ModalSearch>
-              <InputSearch type='text' placeholder='친구 찾기' />
+              <InputSearch type='text' placeholder='친구 찾기'
+                value={search} onChange={(e) => { setSearch(e.target.value) }} />
               <ButtonSearch>찾기</ButtonSearch>
             </ModalSearch>
 
