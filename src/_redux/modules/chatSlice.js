@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 const accessToken = localStorage.getItem("authorization");
 const refreshToken = localStorage.getItem("refresh-token");
-
 
 const initialState = {
   roomId: "",
@@ -14,10 +12,35 @@ const initialState = {
       name: ""
     }
   ],
-  chat: [],
+  chat: {},
   isLoading: false,
   error: null,
 };
+
+
+//채팅방 생성
+export const addChatroom = createAsyncThunk(
+  "post/chatroom",
+  async (payload, { rejectWithValue }) => {
+    // console.log(payload)
+    try {
+      const response = await axios.post(
+        'https://jossiya.shop/ws/api/rooms',
+        payload,
+        {
+          headers: {
+            contentType: "application/json",
+            authorization: accessToken,
+            "refresh-token": refreshToken,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 
 //이전 채팅내용 가져오기
@@ -44,6 +67,7 @@ export const loadMessage = createAsyncThunk(
 export const getChatRoom = createAsyncThunk(
   "get/chatroom",
   async (payload, { rejectWithValue }) => {
+
     try {
       const response = await axios.get('https://jossiya.shop/api/rooms', {
         headers: {
@@ -63,14 +87,14 @@ export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    addMessage: (state, { payload }) => {
-      state.chat = [payload, ...state.chat];
-    },
+    // addMessage: (state, { payload }) => {
+    //   state.chat = [payload, ...state.chat];
+    // },
   },
   extraReducers: {
     // [addChatroom.fulfilled]: (state, { payload }) => {
     //   state.isLoading = false;
-    //   state.roomId = payload;
+    //   state.chat = payload;
     // },
     // [loadMessage.fulfilled]: (state, { payload }) => {
     //   state.isLoading = false;
