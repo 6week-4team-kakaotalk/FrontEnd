@@ -51,14 +51,6 @@ const ChatRoom = () => {
   useEffect(() => {
     dispatch(getMessage(id));
   }, []);
-  console.log(getMessage(id));
-
-  // const test = chatRoom.id;
-
-  // if (chatRoom.id === id) {
-  //   return chatRoom.id;
-  // }
-  // console.log(`im${test}`);
 
   const room = chatRoom.filter((x) => x.id === id);
   console.log(room);
@@ -87,7 +79,7 @@ const ChatRoom = () => {
   //메시지 보내기
   const sendMessage = () => {
     client.send(
-      `/pub/chat/message/${id}`,
+      `/pub/chat/message/`,
       headers,
       JSON.stringify({
         type: 'TALK',
@@ -111,7 +103,7 @@ const ChatRoom = () => {
               navigate('/chatList');
             }}
           />
-          <ChatName>{room[0].name}</ChatName>
+          <ChatName>{room[0]?.name}</ChatName>
         </HeaderBox>
 
         {/* 상대 채팅 */}
