@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import MainModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getPlusUser } from '../_redux/modules/friend_info';
-import { __getUserInfo } from '../_redux/modules/user_info';
+// import { __getPlusUser } from '../_redux/modules/friend_info';
+// import { __getUserInfo } from '../_redux/modules/user_info';
 
 const Main = () => {
   //const [modalIsOpen, setIsOpen] = useState(false);
@@ -18,9 +18,9 @@ const Main = () => {
   console.log(userInfo);
   // const friendInfo = useSelector((state) => state.friend.userFriend);
 
-  useEffect(() => {
-    dispatch(__getUserInfo());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(__getUserInfo());
+  // }, []);
 
   // useEffect(() => {
   //   dispatch(__getPlusUser());
