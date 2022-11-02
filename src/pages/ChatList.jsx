@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import { BsXCircle, BsChat } from 'react-icons/bs';
-import { getChatRoom } from '../_redux/modules/chatSlice';
-import { useParams } from 'react-router-dom';
+import { addChatroom, getChatRoom } from '../_redux/modules/chatSlice';
+import _ from 'lodash';
 //import queryString from "query-string";
 
 const ChatList = () => {
   const [modal, setModal] = useState(false);
+  const [addChat, setAddChat] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,11 +18,6 @@ const ChatList = () => {
   //qury.id
 
   const chatRoom = useSelector((state) => state.chat.chatRoom);
-
-  // console.log(Object.entries(chatRoom.id)[7])
-
-  //Object.entries()
-  // console.log(roomId)
 
   const handleModal = () => {
     setModal(!modal);
@@ -31,15 +27,10 @@ const ChatList = () => {
     dispatch(getChatRoom());
   }, [dispatch]);
 
-  // if (!chatRoom) return;
-  console.log(chatRoom);
-
   return (
     <div>
-      {}
       <Headerdiv>
         <h3>채팅</h3>
-
         <BsChat
           onClick={handleModal}
           size={28}
@@ -82,7 +73,13 @@ const ChatList = () => {
           />
 
           <h2>대화상대 선택</h2>
-          <Search placeholder="이름 검색"></Search>
+          <Search
+            value={addChat}
+            onChange={(e) => setAddChat(e.target.value)}
+            placeholder="이름 검색"
+          />
+
+          {/* <button onClick={dispatch(addChatroom(addChat))}>생성</button> */}
           <h4>친구</h4>
 
           <ChatsBox>
@@ -94,14 +91,14 @@ const ChatList = () => {
             </CheckBox>
           </ChatsBox>
 
-          <ChatsBox>
+          {/* <ChatsBox>
             <ProBox>
               <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
             </ProBox>
             <CheckBox>
               <UserName>이름</UserName>
             </CheckBox>
-          </ChatsBox>
+          </ChatsBox> */}
         </ReactModal>
       </Headerdiv>
 

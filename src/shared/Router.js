@@ -5,9 +5,12 @@ import Register from "../pages/Register";
 import Main from "../pages/Main";
 import ChatList from "../pages/ChatList";
 import ChatRoom from "../pages/ChatRoom";
+// import PrivateRoute from "./PrivateRoute";
 
 
 const Router = () => {
+  // const access = localStorage.getItem("authorization");
+  // const refresh = localStorage.getItem("refresh-token");
 
 
   return (
