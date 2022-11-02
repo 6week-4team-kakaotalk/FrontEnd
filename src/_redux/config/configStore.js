@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import myinfo from "../modules/user_info";
-// import friend from "../modules/friend_info";
-// import chat from "../modules/chat_sever";
-// import { signUp, login } from "../modules/login_signup";
 import members from "../modules/memberSlice";
+import chat from "../modules/chatSlice";
 
 const store = configureStore({
   // reducer: {
@@ -14,7 +11,8 @@ const store = configureStore({
   //   //   chat,
   // },
   reducer: {
-    members
+    members,
+    chat,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

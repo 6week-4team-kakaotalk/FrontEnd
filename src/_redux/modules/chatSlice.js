@@ -30,7 +30,7 @@ export const addChatroom = createAsyncThunk(
         {
           headers: {
             contentType: "application/json",
-            authorization: accessToken,
+            "authorization": accessToken,
             "refresh-token": refreshToken,
           },
         }
@@ -44,11 +44,11 @@ export const addChatroom = createAsyncThunk(
 
 
 //이전 채팅내용 가져오기
-export const loadMessage = createAsyncThunk(
+export const getMessage = createAsyncThunk(
   "get/chat",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://jossiya.shop/api/rooms/${payload}`, {
+      const response = await axios.get(`https://jossiya.shop/api/${payload}/messages`, {
         headers: {
           contentType: "application/json",
           "authorization": accessToken,
@@ -87,19 +87,19 @@ export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    // addMessage: (state, { payload }) => {
-    //   state.chat = [payload, ...state.chat];
-    // },
+    addMessage: (state, { payload }) => {
+      state.chat = [payload, ...state.chat];
+    },
   },
   extraReducers: {
     // [addChatroom.fulfilled]: (state, { payload }) => {
     //   state.isLoading = false;
     //   state.chat = payload;
     // },
-    // [loadMessage.fulfilled]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   state.chat = payload;
-    // },
+    [getMessage.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.chat = payload;
+    },
     [getChatRoom.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.chatRoom = payload;

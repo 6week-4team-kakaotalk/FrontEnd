@@ -9,11 +9,19 @@ import SockJS from 'sockjs-client';
 //import * as SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
+import {
+  getMessage,
+  addMessage,
+  getChatRoom,
+} from '../_redux/modules/chatSlice';
+
 const ChatRoom = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const [message, setMessage] = useState('');
+  console.log(message);
 
   const headers = {
     authorization: localStorage.getItem('authorization'),
@@ -22,9 +30,16 @@ const ChatRoom = () => {
   const socket = new SockJS('https://jossiya.shop/ws-stomp');
   const client = Stomp.over(socket);
 
-  //const chatList = useSelector((state) => state.chat.chat);
+  const chatRoom = useSelector((state) => state.chat.chatRoom);
+  console.log(chatRoom);
+
+  const chatList = useSelector((state) => state.chat.chat);
+  console.log(chatList);
   //const userInfo = useSelector((state) => state.myinfo.user.data);
-  // const { roomId } = useParams();
+
+  useEffect(() => {
+    dispatch(getChatRoom());
+  }, []);
 
   useEffect(() => {
     onConneted();
@@ -32,6 +47,21 @@ const ChatRoom = () => {
       onConneted();
     };
   }, []);
+
+  useEffect(() => {
+    dispatch(getMessage(id));
+  }, []);
+  console.log(getMessage(id));
+
+  // const test = chatRoom.id;
+
+  // if (chatRoom.id === id) {
+  //   return chatRoom.id;
+  // }
+  // console.log(`im${test}`);
+
+  const room = chatRoom.filter((x) => x.id === id);
+  console.log(room);
 
   //연결&구독 // 방입장
   function onConneted() {
@@ -46,9 +76,9 @@ const ChatRoom = () => {
           (data) => {
             const newMessage = JSON.parse(data.body);
             //JSON 문자열의 구문을 분석하고, 그 결과에서 JavaScript 값이나 객체를 생성
-            //dispatch(addMessage(newMessage)); // *
+            dispatch(addMessage(newMessage));
           },
-          headers // *
+          headers
         );
       });
     } catch (error) {}
@@ -81,7 +111,7 @@ const ChatRoom = () => {
               navigate('/chatList');
             }}
           />
-          <ChatName>채팅명</ChatName>
+          <ChatName>{room[0].name}</ChatName>
         </HeaderBox>
 
         {/* 상대 채팅 */}
@@ -103,9 +133,9 @@ const ChatRoom = () => {
         </ChatsBox2>
       </ContentWrapper>
       <Footer>
-        <Textarea />
+        <Textarea onChange={(e) => setMessage(e.target.value)} vlue={message} />
         <Butdiv>
-          <Button>전송</Button>
+          <Button onClick={sendMessage}>전송</Button>
         </Butdiv>
       </Footer>
     </Wrapper>
