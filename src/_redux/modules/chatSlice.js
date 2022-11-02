@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 const accessToken = localStorage.getItem("authorization");
 const refreshToken = localStorage.getItem("refresh-token");
-
 
 const initialState = {
   roomId: "",
@@ -20,12 +18,38 @@ const initialState = {
 };
 
 
-//이전 채팅내용 가져오기
-export const loadMessage = createAsyncThunk(
+//채팅방 생성
+export const addChatroom = createAsyncThunk(
+  "post/chatroom",
+  async (payload, { rejectWithValue }) => {
+    // console.log(payload)
+    try {
+      const response = await axios.post(
+        'https://jossiya.shop/ws/api/rooms',
+        payload,
+        {
+          headers: {
+            contentType: "application/json",
+            authorization: accessToken,
+            "refresh-token": refreshToken,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+//메시지 불러오기
+export const getMessage = createAsyncThunk(
   "get/chat",
   async (payload, { rejectWithValue }) => {
+    //console.log(payload)
     try {
-      const response = await axios.get(`https://jossiya.shop/api/rooms/${payload}`, {
+      const response = await axios.get(`https://jossiya.shop/api/${payload}/messages`, {
         headers: {
           contentType: "application/json",
           "authorization": accessToken,
@@ -44,6 +68,7 @@ export const loadMessage = createAsyncThunk(
 export const getChatRoom = createAsyncThunk(
   "get/chatroom",
   async (payload, { rejectWithValue }) => {
+
     try {
       const response = await axios.get('https://jossiya.shop/api/rooms', {
         headers: {
@@ -64,18 +89,19 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, { payload }) => {
-      state.chat = [payload, ...state.chat];
+      console.log(payload)
+      state.chat = [...state.chat, payload];
     },
   },
   extraReducers: {
     // [addChatroom.fulfilled]: (state, { payload }) => {
     //   state.isLoading = false;
-    //   state.roomId = payload;
-    // },
-    // [loadMessage.fulfilled]: (state, { payload }) => {
-    //   state.isLoading = false;
     //   state.chat = payload;
     // },
+    [getMessage.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.chat = payload;
+    },
     [getChatRoom.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.chatRoom = payload;

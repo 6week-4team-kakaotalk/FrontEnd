@@ -26,7 +26,7 @@ const Login = () => {
   };
 
   //유효성 검사
-  const checkID = loginId.length >= 4 && loginId.length <= 12;
+  const checkID = loginId.length >= 4 && loginId.length <= 40;
   const checkpassword = password.length >= 6 && password.length <= 32;
 
   //유효성 통과시 버튼&폰트 색상 변경
@@ -55,7 +55,7 @@ const Login = () => {
         </LogoWrap>
         <InputWrap>
           <Input
-            placeholder="계정"
+            placeholder="이메일"
             name="username"
             value={loginId}
             borderB="none"
