@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import { BsXCircle, BsChat } from 'react-icons/bs';
-import { getChatRoom } from "../_redux/modules/chatSlice";
-import { useParams } from "react-router-dom";
+import { getChatRoom } from '../_redux/modules/chatSlice';
+import { useParams } from 'react-router-dom';
 //import queryString from "query-string";
 
 const ChatList = () => {
@@ -16,14 +16,12 @@ const ChatList = () => {
   // const query = queryString.parse(location.search);
   //qury.id
 
-  const chatRoom = useSelector((state) => state.chat.chatRoom)
+  const chatRoom = useSelector((state) => state.chat.chatRoom);
 
   // console.log(Object.entries(chatRoom.id)[7])
 
-
   //Object.entries()
   // console.log(roomId)
-
 
   const handleModal = () => {
     setModal(!modal);
@@ -34,27 +32,11 @@ const ChatList = () => {
   }, [dispatch]);
 
   // if (!chatRoom) return;
-  console.log(chatRoom)
-
-
-
-
-  let chatNumber = 0;
-  let arr = [];
-
-
-  for (let i = 1; i <= chatRoom.length; i++) {
-    chatNumber++;
-    arr.push(chatNumber)
-  }
-  //console.log(arr)
+  console.log(chatRoom);
 
   return (
     <div>
-
-      {
-
-      }
+      {}
       <Headerdiv>
         <h3>채팅</h3>
 
@@ -123,12 +105,13 @@ const ChatList = () => {
         </ReactModal>
       </Headerdiv>
 
-
-
       {chatRoom.map((room, index) => {
         return (
           //query.id
-          <ChatsBox key={index} onDoubleClick={() => navigate(`/chatroom/${room.id}`)}>
+          <ChatsBox
+            key={index}
+            onDoubleClick={() => navigate(`/chatroom/${room.id}`)}
+          >
             <ProBox>
               <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
             </ProBox>
@@ -137,7 +120,7 @@ const ChatList = () => {
               {/* <LastChat>-</LastChat> */}
             </div>
           </ChatsBox>
-        )
+        );
       })}
     </div>
   );
