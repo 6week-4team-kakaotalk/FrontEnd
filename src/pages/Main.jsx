@@ -1,63 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import MainModal from 'react-modal';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { BsDiscFill } from 'react-icons/bs';
+import { __postPlusUser, __getPlusUser } from '../_redux/modules/friend_info';
 
 const Main = () => {
   //const [modalIsOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState('');
   const [modal, setModal] = useState(false);
   const [search, setSearch] = useState('');
+  const [searchVal, setSearchVal] = useState('');
+  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+  const searchRef = useRef(null);
 
+  const friendInfo = useSelector((state) => state.friend.userFriend);
+  // console.log(friendInfo);
+
+  // useEffect(() => {
+  //   dispatch(__getUserInfo());
+  // }, []);
+
+  // useEffect(() => {
+  //   dispatch(__getPlusUser());
+  // }, []);
+
+  // const plusUserId = () => {
+  //   dispatch(__postPlusUser(userName));
+  // };
+
+  const handleFormData = (e) => {
+    e.preventDefault();
+    dispatch(__postPlusUser(userName));
+  };
 
   const handModal = () => {
     setModal(!modal);
-  }
+  };
+
+  const searchFriendName =
+    friendInfo &&
+    friendInfo.filter((friend) => {
+      return friend.nickName.toLowerCase().includes(searchVal.toLowerCase());
+    });
+
+  console.log(searchFriendName.nickName);
 
   return (
     <Layout>
       <MainContainer>
-
         {/* 상단 메뉴 */}
         <TopBox>
           <TopText>친구</TopText>
-          <TopButton onClick={handModal}><i className="fa-solid fa-user-plus"></i></TopButton>
+          <TopButton onClick={handModal}>
+            <i className="fa-solid fa-user-plus"></i>
+          </TopButton>
 
           {/* 모달창 */}
-          <MainModal isOpen={modal} onRequestClose={() => setModal(false)}
-            style={
-              {
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.2)'
-                },
-                content: {
-                  margin: '0 auto',
-                  width: '500px',
-                  height: '400px'
-                }
-              }
-            }
+          <MainModal
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
+            style={{
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+              },
+              content: {
+                margin: '0 auto',
+                width: '500px',
+                height: '400px',
+              },
+            }}
           >
             <ModalBox>
-              <div><h3>친구추가</h3></div>
-              <MButton onClick={handModal}><i className="fa-solid fa-x"></i></MButton>
+              <div>
+                <h3>친구추가</h3>
+              </div>
+              <MButton onClick={handModal}>
+                <i className="fa-solid fa-x"></i>
+              </MButton>
             </ModalBox>
 
             <ModalSearch>
-              <InputSearch type='text' placeholder='친구 찾기'
-                value={search} onChange={(e) => { setSearch(e.target.value) }} />
-              <ButtonSearch>찾기</ButtonSearch>
+              <InputSearch
+                type="text"
+                placeholder="친구 찾기"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <ButtonSearch onClick={handleFormData}>찾기</ButtonSearch>
             </ModalSearch>
 
             <ModalPro>
-              <ModalProfile></ModalProfile>
+              <ModalProfile />
               <ModalProfileName>곽항해</ModalProfileName>
               <ButtonPlus>추가</ButtonPlus>
             </ModalPro>
-
           </MainModal>
           {/* 모달창 */}
-
         </TopBox>
 
         {/* 내 프로필 */}
@@ -77,13 +120,10 @@ const Main = () => {
           <FrProfile></FrProfile>
           <FrProfileName>박항해</FrProfileName>
         </FrBox>
-
       </MainContainer>
     </Layout>
-
-  )
-}
-
+  );
+};
 
 export default Main;
 
@@ -94,15 +134,15 @@ const ModalBox = styled.div`
 `;
 
 const InputSearch = styled.input`
-  border:none;
+  border: none;
   outline: none;
   border-bottom: 1px solid black;
   font-size: 18px;
 `;
 
 const ButtonSearch = styled.button`
-  border:none;
-  outline:none;
+  border: none;
+  outline: none;
   background-color: #4a403a;
   border-radius: 5px;
   color: #fff;
@@ -124,7 +164,7 @@ const ModalPro = styled.div`
 `;
 
 const ModalProfile = styled.div`
-  background-image:url("https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg");
+  background-image: url('https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -147,8 +187,8 @@ const ModalProfileName = styled.div`
 const ButtonPlus = styled.button`
   width: 50px;
   height: 30px;
-  border:none;
-  outline:none;
+  border: none;
+  outline: none;
   background-color: #4a403a;
   border-radius: 5px;
   color: #fff;
@@ -163,14 +203,13 @@ const MButton = styled.button`
   font-size: 18px;
 `;
 
-
 const MainContainer = styled.div`
   width: 500px;
   box-shadow: 2px 2px 0px 0px #cacaca;
 `;
 
 const Profile = styled.div`
-  background-image:url("https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg");
+  background-image: url('https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -204,7 +243,7 @@ const FrBox = styled.div`
 `;
 
 const FrProfile = styled.div`
-  background-image:url("https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg");
+  background-image: url('https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -238,5 +277,5 @@ const TopText = styled.div`
 const TopBox = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 25px 15px 15px 15px
+  margin: 25px 15px 15px 15px;
 `;
