@@ -73,6 +73,15 @@ const ChatRoom = () => {
   // 채팅방 이름
   const room = chatRoom.filter((x) => x.id === id);
 
+  //시간
+  const today = new Date();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
+  const milliseconds = today.getMilliseconds();
+  const createdAt = `${hours}-${minutes}-${seconds}-${milliseconds}`;
+  // console.log(createdAt)
+
   // useEffect(() => {
   //   sendMessage
   // },[])
@@ -121,6 +130,7 @@ const ChatRoom = () => {
         name: room[0]?.name,
         message: message,
         sender: users.nickName,
+        createdAt: createdAt,
       })
     );
     setMessage('');
@@ -165,27 +175,42 @@ const ChatRoom = () => {
 
         {/* 나의 채팅 */}
         {chatList.map((chat, idx) => {
+          // const element = document.querySelecotr('div');
+
+          // // 현재의 최하단 구하기
+          // const eh = element.clientHeight + element.scrollTop;
+
+          // // 요소가 추가되어 길이가 길어지기 전에 비교
+          // const isScroll = element.scrollHeight <= eh;
+
+          // // -- 요소 추가하는 코드 --
+
+          // // 스크롤이 최하단 일때만 고정
+          // if (isScroll) {
+          //   element.scrollTop = element.scrollHeight;
+          // }
+
           if (chat.memberId === users.memberId) {
             return (
-              <ChatsBox2 key={idx}>
+              <ChatsBox2 key={message.id}>
                 <div>
                   <MyChat>{chat.message}</MyChat>
                 </div>
               </ChatsBox2>
             );
-          } else {
-            {
-              /* 상대 채팅 */
-            }
-            <ChatsBox>
-              <ProBox>
-                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-              </ProBox>
-              <div>
-                <UserName>나는 상대방</UserName>
-                <UserChat>{chat.message}</UserChat>
-              </div>
-            </ChatsBox>;
+          }
+          if (chat.memberId != users.memberId) {
+            return (
+              <ChatsBox key={message.id}>
+                <ProBox>
+                  <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+                </ProBox>
+                <div>
+                  <UserName>나는 상대방</UserName>
+                  <UserChat>{chat.message}</UserChat>
+                </div>
+              </ChatsBox>
+            );
           }
         })}
       </ContentWrapper>
@@ -289,7 +314,7 @@ const ProBox = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   background-color: #b2c7d9;
 `;
 
@@ -301,6 +326,7 @@ const Footer = styled.div`
   display: flex;
   flex-direction: row;
   background-color: #eeeeee;
+  bottom: 0;
 `;
 
 const Textarea = styled.textarea`

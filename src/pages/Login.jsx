@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { ReactComponent as Chatfilled } from '../assets/chat-fill.svg';
 // import { login } from "../_redux/modules/login_signup";
 import { signIn } from '../_redux/modules/memberSlice';
-import SignInUpLayout from '../components/layout/SignInUpLayout';
 
 const Login = () => {
   const navigate = useNavigate();

@@ -62,7 +62,7 @@ export const signOut = createAsyncThunk(
           'refresh-Token': localStorage.getItem('refresh-Token')
         },
       };
-      const { data } = await axios.post("https://jossiya.shop/api/member/logout", payload, config);
+      const { data } = await axios.post("https://jossiya.shop/auth/member/logout", payload, config);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

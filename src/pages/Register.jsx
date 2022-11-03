@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { ReactComponent as Xbutton } from '../assets/x-circle-fill.svg';
 import { signUp } from '../_redux/modules/memberSlice';
-import SignInUpLayout from '../components/layout/SignInUpLayout';
 
 const Register = () => {
   const navigate = useNavigate();
