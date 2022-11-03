@@ -1,11 +1,11 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import { ReactComponent as Chatfilled } from "../assets/chat-fill.svg";
+import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { ReactComponent as Chatfilled } from '../assets/chat-fill.svg';
 // import { login } from "../_redux/modules/login_signup";
-import { signIn } from "../_redux/modules/memberSlice";
-import SignInUpLayout from "../components/layout/SignInUpLayout";
+import { signIn } from '../_redux/modules/memberSlice';
+import SignInUpLayout from '../components/layout/SignInUpLayout';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,9 +15,8 @@ const Login = () => {
   const [loginId, setloginId] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleRegister = () => {
-    navigate("/register");
+    navigate('/register');
   };
 
   const userInfo = {
@@ -30,56 +29,54 @@ const Login = () => {
   const checkpassword = password.length >= 6 && password.length <= 32;
 
   //유효성 통과시 버튼&폰트 색상 변경
-  let setColor = "";
-  let setFontColor = "";
+  let setColor = '';
+  let setFontColor = '';
 
   if (checkID && checkpassword) {
-    setColor = "#4A403A";
-    setFontColor = "white";
+    setColor = '#4A403A';
+    setFontColor = 'white';
   } else {
-    setColor = "#eeee";
-    setFontColor = "gray";
+    setColor = '#eeee';
+    setFontColor = 'gray';
   }
 
   const onClick = () => {
     dispatch(signIn(userInfo));
-    setloginId("");
-    setPassword("");
+    setloginId('');
+    setPassword('');
   };
 
   return (
-    <SignInUpLayout>
-      <MainContainer>
-        <LogoWrap>
-          <Chatfilled width="100" height="100" fill="#4A403A"></Chatfilled>
-        </LogoWrap>
-        <InputWrap>
-          <Input
-            placeholder="이메일"
-            name="username"
-            value={loginId}
-            borderB="none"
-            onChange={(e) => setloginId(e.target.value)}
-          />
-          <Input
-            placeholder="비밀번호"
-            name="pw"
-            value={password}
-            type="password"
-            borderT="1px solid #e5e5e5"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button fontColor={setFontColor} color={setColor} onClick={onClick}>
-            로그인
-          </Button>
-        </InputWrap>
-        <TextBox>
-          <p style={{ cursor: "pointer" }} onClick={handleRegister}>
-            회원가입
-          </p>
-        </TextBox>
-      </MainContainer>
-    </SignInUpLayout>
+    <MainContainer>
+      <LogoWrap>
+        <Chatfilled width="100" height="100" fill="#4A403A"></Chatfilled>
+      </LogoWrap>
+      <InputWrap>
+        <Input
+          placeholder="이메일"
+          name="username"
+          value={loginId}
+          borderB="none"
+          onChange={(e) => setloginId(e.target.value)}
+        />
+        <Input
+          placeholder="비밀번호"
+          name="pw"
+          value={password}
+          type="password"
+          borderT="1px solid #e5e5e5"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button fontColor={setFontColor} color={setColor} onClick={onClick}>
+          로그인
+        </Button>
+      </InputWrap>
+      <TextBox>
+        <p style={{ cursor: 'pointer' }} onClick={handleRegister}>
+          회원가입
+        </p>
+      </TextBox>
+    </MainContainer>
   );
 };
 
@@ -97,8 +94,8 @@ const MainContainer = styled.div`
 `;
 
 const LogoWrap = styled.div`
-  margin-left:35px;
-`
+  margin-left: 35px;
+`;
 
 //내용물 전체 크기설정
 const InputWrap = styled.div`
@@ -126,8 +123,8 @@ const Input = styled.input`
   ::-webkit-input-placeholder {
     color: #d3d3d3;
   }
-  border-bottom: ${(props) => props.borderB || "1px solid #FFCE45"};
-  border-top: ${(props) => props.borderT || "1px solid #FFCE45"};
+  border-bottom: ${(props) => props.borderB || '1px solid #FFCE45'};
+  border-top: ${(props) => props.borderT || '1px solid #FFCE45'};
 `;
 
 //입력버튼
@@ -138,8 +135,8 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   border: 1px solid #ffce45;
-  background-color: ${(props) => props.color || "#eeee"};
-  color: ${(props) => props.fontColor || "gray"};
+  background-color: ${(props) => props.color || '#eeee'};
+  color: ${(props) => props.fontColor || 'gray'};
 `;
 
 const TextBox = styled.div`
