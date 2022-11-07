@@ -5,6 +5,7 @@ import MainModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 // import { __getPlusUser } from '../_redux/modules/friend_info';
 // import { __getUserInfo } from '../_redux/modules/user_info';
+import Navigation from '../components/header/Navigation';
 
 const Main = () => {
   //const [modalIsOpen, setIsOpen] = useState(false);
@@ -52,6 +53,7 @@ const Main = () => {
 
   return (
     <Layout>
+      {/* <Navigation /> */}
       <MainContainer>
         {/* 상단 메뉴 */}
         <TopBox>
@@ -116,7 +118,7 @@ const Main = () => {
           <Profile></Profile>
           <ProfileName>김항해</ProfileName>
         </MyBox>
-        <hr width={470} color="#e2e2e2" />
+        <hr width={400} color="#e2e2e2" />
 
         {/* 친구 리스트 */}
         <FrBox>
@@ -173,14 +175,14 @@ const ModalPro = styled.div`
 
 const ModalProfile = styled.div`
   background-image: url('https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 15px;
-  width: 50px;
-  height: 50px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 50px;
+  height: 100%;
+  max-height: 50px;
+  margin-left: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 `;
 
@@ -212,8 +214,9 @@ const MButton = styled.button`
 `;
 
 const MainContainer = styled.div`
-  width: 500px;
-  box-shadow: 2px 2px 0px 0px #cacaca;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 1px 1px 0px 0px #ebebeb;
 `;
 
 const Profile = styled.div`
@@ -221,26 +224,27 @@ const Profile = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 15px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  max-width: 50px;
+  height: 100%;
+  max-height: 50px;
+  border-radius: 18px;
+  margin-left: 10px;
 `;
 
 const ProfileName = styled.div`
-  width: 100px;
-  height: 50px;
   display: flex;
+  margin: auto;
+  margin-left: 15px;
   align-items: center;
-  margin-left: 5px;
 `;
 
 const MyBox = styled.div`
-  margin-left: 15px;
-  margin-bottom: 15px;
   display: flex;
+  margin: auto;
+  align-items: center;
+  width: 100%;
+  height: 70px;
 `;
 
 const FrBox = styled.div`
@@ -264,14 +268,14 @@ const FrProfile = styled.div`
 `;
 
 const FrProfileName = styled.div`
-  width: 100px;
-  height: 50px;
   display: flex;
+  margin: auto;
+  margin-left: 15px;
   align-items: center;
-  margin-left: 5px;
 `;
 
 const TopButton = styled.button`
+  margin-top: 20px;
   border: none;
   outline: none;
   background-color: transparent;
@@ -281,7 +285,9 @@ const TopButton = styled.button`
 
 const TopText = styled.div`
   font-weight: 600;
+  margin-top: 25px;
 `;
+
 const TopBox = styled.div`
   display: flex;
   justify-content: space-between;

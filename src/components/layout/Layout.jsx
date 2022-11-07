@@ -1,7 +1,6 @@
-import React from 'react'
-import Navigation from '../header/Navigation'
-import styled from 'styled-components'
-
+import React from 'react';
+import Navigation from '../header/Navigation';
+import styled from 'styled-components';
 
 const Layout = ({ children }) => {
   return (
@@ -11,9 +10,8 @@ const Layout = ({ children }) => {
         {children}
       </LayoutBody>
     </>
-
-  )
-}
+  );
+};
 export default Layout;
 
 const LayoutBody = styled.div`
@@ -21,5 +19,4 @@ const LayoutBody = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 10px;
-  
 `;

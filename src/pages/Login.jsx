@@ -1,10 +1,10 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import { ReactComponent as Chatfilled } from "../assets/chat-fill.svg";
+import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { ReactComponent as Chatfilled } from '../assets/chat-fill.svg';
 // import { login } from "../_redux/modules/login_signup";
-import { signIn } from "../_redux/modules/memberSlice";
+import { signIn } from '../_redux/modules/memberSlice';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,9 +14,8 @@ const Login = () => {
   const [loginId, setloginId] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleRegister = () => {
-    navigate("/register");
+    navigate('/register');
   };
 
   const userInfo = {
@@ -29,28 +28,36 @@ const Login = () => {
   const checkpassword = password.length >= 8 && password.length <= 32;
 
   //유효성 통과시 버튼&폰트 색상 변경
-  let setColor = "";
-  let setFontColor = "";
+  let setColor = '';
+  let setFontColor = '';
 
   if (checkID && checkpassword) {
-    setColor = "#4A403A";
-    setFontColor = "white";
+    setColor = '#4A403A';
+    setFontColor = 'white';
   } else {
-    setColor = "#eeee";
-    setFontColor = "gray";
+    setColor = '#eeee';
+    setFontColor = 'gray';
   }
 
   const onClick = () => {
     dispatch(signIn(userInfo));
-    setloginId("");
-    setPassword("");
+    setloginId('');
+    setPassword('');
   };
 
   return (
-    <div>
+    <Outline>
       <MainContainer>
         <LogoWrap>
-          <Chatfilled width="100" height="100" fill="#4A403A"></Chatfilled>
+          <Chatfilled
+            width="100%"
+            height="100"
+            fill="#4A403A"
+            style={{
+              margin: '70px auto',
+              display: 'flex',
+            }}
+          ></Chatfilled>
         </LogoWrap>
         <InputWrap>
           <Input
@@ -73,14 +80,24 @@ const Login = () => {
           </Button>
         </InputWrap>
         <TextBox>
-          <p style={{ cursor: "pointer" }} onClick={handleRegister}>
+          <p style={{ cursor: 'pointer' }} onClick={handleRegister}>
             회원가입
           </p>
         </TextBox>
       </MainContainer>
-    </div>
+    </Outline>
   );
 };
+
+const Outline = styled.div`
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  margin: 100px auto;
+  align-items: center;
+  padding-top: 10px;
+`;
 
 //전체 가운데 정렬용
 const MainContainer = styled.div`
@@ -96,14 +113,17 @@ const MainContainer = styled.div`
 `;
 
 const LogoWrap = styled.div`
-  margin-left:35px;
-`
+  margin-left: 35px;
+`;
 
 //내용물 전체 크기설정
 const InputWrap = styled.div`
-  width: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   margin-bottom: 30px;
-  margin-top: 50px;
+  margin-top: 20px;
   p {
     font-size: 10px;
     font-weight: 800;
@@ -116,7 +136,11 @@ const InputWrap = styled.div`
 `;
 
 const Input = styled.input`
-  min-width: 100%;
+  width: 100%;
+  max-width: 200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
   outline: none;
   padding: 15px;
   border: 1px solid #ffce45;
@@ -125,25 +149,25 @@ const Input = styled.input`
   ::-webkit-input-placeholder {
     color: #d3d3d3;
   }
-  border-bottom: ${(props) => props.borderB || "1px solid #FFCE45"};
-  border-top: ${(props) => props.borderT || "1px solid #FFCE45"};
+  border-bottom: ${(props) => props.borderB || '1px solid #FFCE45'};
+  border-top: ${(props) => props.borderT || '1px solid #FFCE45'};
 `;
 
 //입력버튼
 const Button = styled.button`
-  min-width: 197px;
+  width: 100%;
+  margin: 10px auto;
+  max-width: 235px;
   padding: 12px;
-  margin-top: 10px;
   border: none;
   border-radius: 4px;
   border: 1px solid #ffce45;
-  background-color: ${(props) => props.color || "#eeee"};
-  color: ${(props) => props.fontColor || "gray"};
+  background-color: ${(props) => props.color || '#eeee'};
+  color: ${(props) => props.fontColor || 'gray'};
 `;
 
 const TextBox = styled.div`
-  height: 10px;
-  margin-left: 27px;
+  margin: auto;
   margin-top: 50px;
   p {
     text-align: center;

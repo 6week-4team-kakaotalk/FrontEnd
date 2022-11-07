@@ -6,6 +6,9 @@ import ReactModal from 'react-modal';
 import { BsXCircle, BsChat } from 'react-icons/bs';
 import { getChatRoom } from '../_redux/modules/chatSlice';
 import { useParams } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
+import Navigation from '../components/header/Navigation';
+
 //import queryString from "query-string";
 
 const ChatList = () => {
@@ -45,108 +48,112 @@ const ChatList = () => {
   //console.log(arr)
 
   return (
-    <div>
-      {}
-      <Headerdiv>
-        <h3>채팅</h3>
-
-        <BsChat
-          onClick={handleModal}
-          size={28}
-          style={{
-            cursor: 'pointer',
-          }}
-        />
-        <ReactModal
-          style={{
-            overlay: {
-              position: 'fixed',
-              backgroundColor: 'rgba(255, 255, 255, 0.75)',
-            },
-            content: {
-              margin: 'auto',
-              position: 'fixed',
-              width: '400px',
-              height: '500px',
-              border: '1px solid #ccc',
-              background: '#fff',
-              overflow: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              borderRadius: '4px',
-              outline: 'none',
-              padding: '20px',
-            },
-          }}
-          isOpen={modal}
-          onRequestClose={() => setModal(false)}
-        >
-          <BsXCircle
-            size={24}
+    <Layout>
+      <MainContainer>
+        {/* <Navigation /> */}
+        <TopBox>
+          <TopText>채팅</TopText>
+          <BsChat
             onClick={handleModal}
+            size={28}
             style={{
-              display: 'flex',
-              margin: 'auto',
-              float: 'right',
               cursor: 'pointer',
+              border: 'none',
+              outline: 'none',
+              marginTop: '15px',
+              marginRight: '5px',
             }}
           />
-
-          <h2>대화상대 선택</h2>
-          <Search placeholder="이름 검색"></Search>
-          <h4>친구</h4>
-
-          <ChatsBox>
-            <ProBox>
-              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-            </ProBox>
-            <CheckBox>
-              <UserName>김승재</UserName>
-            </CheckBox>
-          </ChatsBox>
-
-          <ChatsBox>
-            <ProBox>
-              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-            </ProBox>
-            <CheckBox>
-              <UserName>이름</UserName>
-            </CheckBox>
-          </ChatsBox>
-        </ReactModal>
-      </Headerdiv>
-
-      {chatRoom.map((room, index) => {
-        return (
-          //query.id
-          <ChatsBox
-            key={index}
-            onDoubleClick={() => navigate(`/chatroom/${room.id}`)}
+          <ReactModal
+            style={{
+              overlay: {
+                position: 'fixed',
+                backgroundColor: 'rgba(255, 255, 255, 0.75)',
+              },
+              content: {
+                margin: 'auto',
+                position: 'fixed',
+                width: '400px',
+                height: '500px',
+                border: '1px solid #ccc',
+                background: '#fff',
+                overflow: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                borderRadius: '4px',
+                outline: 'none',
+                padding: '20px',
+              },
+            }}
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
           >
-            <ProBox>
-              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-            </ProBox>
-            <div>
-              <ChatName>{room.name}</ChatName>
-              {/* <LastChat>-</LastChat> */}
-            </div>
-          </ChatsBox>
-        );
-      })}
-    </div>
+            <BsXCircle
+              size={24}
+              onClick={handleModal}
+              style={{
+                display: 'flex',
+                margin: 'auto',
+                float: 'right',
+                cursor: 'pointer',
+              }}
+            />
+
+            <h2>대화상대 선택</h2>
+            <Search placeholder="이름 검색"></Search>
+            <h4>친구</h4>
+
+            <ChatsBox>
+              <ProBox>
+                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+              </ProBox>
+              <CheckBox>
+                <UserName>김승재</UserName>
+              </CheckBox>
+            </ChatsBox>
+
+            <ChatsBox>
+              <ProBox>
+                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+              </ProBox>
+              <CheckBox>
+                <UserName>이름</UserName>
+              </CheckBox>
+            </ChatsBox>
+          </ReactModal>
+        </TopBox>
+
+        {chatRoom.map((room, index) => {
+          return (
+            //query.id
+            <ChatsBox
+              key={index}
+              onDoubleClick={() => navigate(`/chatroom/${room.id}`)}
+            >
+              <ProBox>
+                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+              </ProBox>
+              <div>
+                <ChatName>{room.name}</ChatName>
+                {/* <LastChat>-</LastChat> */}
+              </div>
+            </ChatsBox>
+          );
+        })}
+      </MainContainer>
+    </Layout>
   );
 };
 export default ChatList;
 
-const Headerdiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 20px auto;
-  padding: 20px;
-  align-items: center;
+const MainContainer = styled.div`
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 1px 1px 0px 0px #ebebeb;
 `;
 
 const ChatsBox = styled.div`
   display: flex;
+  flex-direction: row;
   margin: auto;
   align-items: center;
   width: 100%;
@@ -213,4 +220,15 @@ const UserName = styled.span`
 
 const CheckBox = styled.div`
   display: flex;
+`;
+
+const TopBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 15px 15px 15px;
+`;
+
+const TopText = styled.div`
+  font-weight: 600;
+  margin-top: 25px;
 `;
