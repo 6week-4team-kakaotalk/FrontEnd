@@ -24,8 +24,8 @@ const Login = () => {
   };
 
   //유효성 검사
-  const checkID = loginId.length >= 4 && loginId.length <= 12;
-  const checkpassword = password.length >= 8 && password.length <= 32;
+  const checkID = loginId.length >= 4 && loginId.length <= 40;
+  const checkpassword = password.length >= 6 && password.length <= 32;
 
   //유효성 통과시 버튼&폰트 색상 변경
   let setColor = '';
@@ -46,46 +46,36 @@ const Login = () => {
   };
 
   return (
-    <Outline>
-      <MainContainer>
-        <LogoWrap>
-          <Chatfilled
-            width="100%"
-            height="100"
-            fill="#4A403A"
-            style={{
-              margin: '70px auto',
-              display: 'flex',
-            }}
-          ></Chatfilled>
-        </LogoWrap>
-        <InputWrap>
-          <Input
-            placeholder="계정"
-            name="username"
-            value={loginId}
-            borderB="none"
-            onChange={(e) => setloginId(e.target.value)}
-          />
-          <Input
-            placeholder="비밀번호"
-            name="pw"
-            value={password}
-            type="password"
-            borderT="1px solid #e5e5e5"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button fontColor={setFontColor} color={setColor} onClick={onClick}>
-            로그인
-          </Button>
-        </InputWrap>
-        <TextBox>
-          <p style={{ cursor: 'pointer' }} onClick={handleRegister}>
-            회원가입
-          </p>
-        </TextBox>
-      </MainContainer>
-    </Outline>
+    <MainContainer>
+      <LogoWrap>
+        <Chatfilled width="100" height="100" fill="#4A403A"></Chatfilled>
+      </LogoWrap>
+      <InputWrap>
+        <Input
+          placeholder="이메일"
+          name="username"
+          value={loginId}
+          borderB="none"
+          onChange={(e) => setloginId(e.target.value)}
+        />
+        <Input
+          placeholder="비밀번호"
+          name="pw"
+          value={password}
+          type="password"
+          borderT="1px solid #e5e5e5"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button fontColor={setFontColor} color={setColor} onClick={onClick}>
+          로그인
+        </Button>
+      </InputWrap>
+      <TextBox>
+        <p style={{ cursor: 'pointer' }} onClick={handleRegister}>
+          회원가입
+        </p>
+      </TextBox>
+    </MainContainer>
   );
 };
 

@@ -1,18 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import members from "../modules/memberSlice";
 import chat from "../modules/chatSlice";
+import friend from "../modules/friend_info";
+
 
 const store = configureStore({
-  // reducer: {
-  //   //   signUp,
-  //   //   login,
-  //   //   myinfo,
-  //   //   friend,
-  //   //   chat,
-  // },
   reducer: {
     members,
     chat,
+    friend
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

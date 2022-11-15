@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import { BsXCircle, BsChat } from 'react-icons/bs';
-import { getChatRoom } from '../_redux/modules/chatSlice';
-import { useParams } from 'react-router-dom';
-import Layout from '../components/layout/Layout';
-import Navigation from '../components/header/Navigation';
-
+import { addChatroom, getChatRoom } from '../_redux/modules/chatSlice';
+import _ from 'lodash';
 //import queryString from "query-string";
+import Layout from '../components/layout/Layout';
 
 const ChatList = () => {
   const [modal, setModal] = useState(false);
+  const [addChat, setAddChat] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,12 +19,6 @@ const ChatList = () => {
   //qury.id
 
   const chatRoom = useSelector((state) => state.chat.chatRoom);
-  console.log(chatRoom);
-
-  // console.log(Object.entries(chatRoom.id)[7])
-
-  //Object.entries()
-  // console.log(roomId)
 
   const handleModal = () => {
     setModal(!modal);
@@ -98,27 +91,56 @@ const ChatList = () => {
               }}
             />
 
-            <h2>대화상대 선택</h2>
-            <Search placeholder="이름 검색"></Search>
-            <h4>친구</h4>
+            <h2>채팅방 생성</h2>
+            <CreatChateBox>
+              <Search
+                value={addChat}
+                onChange={(e) => setAddChat(e.target.value)}
+                placeholder="채팅방 이름을 입력해주세요."
+              />
+              <CButton
+                onClick={() => {
+                  dispatch(
+                    addChatroom({
+                      name: addChat,
+                    })
+                  );
+                  handleModal();
+                  window.location.reload();
+                }}
+              >
+                생성
+              </CButton>
+            </CreatChateBox>
 
-            <ChatsBox>
-              <ProBox>
-                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-              </ProBox>
-              <CheckBox>
-                <UserName>김승재</UserName>
-              </CheckBox>
-            </ChatsBox>
+            {/* <h4>친구</h4> */}
 
-            <ChatsBox>
-              <ProBox>
-                <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
-              </ProBox>
-              <CheckBox>
-                <UserName>이름</UserName>
-              </CheckBox>
-            </ChatsBox>
+            {/* <h2>친구 찾기</h2>
+          <Search value={addChat}
+
+            onChange={(e) => setAddChat(e.target.value)}
+            placeholder="이름 검색" />
+
+
+          <h4>친구</h4> */}
+
+            {/* <ChatsBox>
+            <ProBox>
+              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+            </ProBox>
+            <CheckBox>
+              <UserName>김승재</UserName>
+            </CheckBox>
+          </ChatsBox> */}
+
+            {/* <ChatsBox>
+            <ProBox>
+              <PorImg src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg" />
+            </ProBox>
+            <CheckBox>
+              <UserName>이름</UserName>
+            </CheckBox>
+          </ChatsBox> */}
           </ReactModal>
         </TopBox>
 
@@ -156,7 +178,8 @@ const ChatsBox = styled.div`
   flex-direction: row;
   margin: auto;
   align-items: center;
-  width: 100%;
+  //width: 50vw;
+  width: 500px;
   height: 70px;
   cursor: pointer;
 `;
@@ -198,14 +221,13 @@ const LastChat = styled.div`
 `;
 
 const Search = styled.input`
-  width: 380px;
+  width: 200px;
   height: 40px;
   border: 2px solid rgba(168, 168, 168, 0.493);
   background-color: rgba(214, 211, 211, 0.281);
   border-radius: 25px;
   padding: 0px;
   padding-left: 10px;
-  margin: auto;
   display: flex;
   outline: none;
 `;

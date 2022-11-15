@@ -2,7 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const accessToken = localStorage.getItem("authorization");
-const refreshToken = localStorage.getItem("refresh-token");
+const refreshToken = localStorage.getItem("refresh-Token");
+
+
+const initialState = {
+  userFriend: [],
+  isLoading: false,
+  error: null,
+};
+
 
 
 // POST 친구추가
@@ -11,12 +19,12 @@ export const __postPlusUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://54.180.141.164/api/members/${payload}`,
+        `https://jossiya.shop/auth/member/${payload}/plus`,
         payload,
         {
           headers: {
-            authorization: accessToken,
-            "refresh-token": refreshToken,
+            "authorization": accessToken,
+            "refresh-Token": refreshToken,
           },
         }
       );
@@ -35,41 +43,34 @@ export const __postPlusUser = createAsyncThunk(
 );
 
 
-// //GET 친구추가
+//GET 친구
 export const __getPlusUser = createAsyncThunk(
-  "GET_USER",
+  "user/getPlusUser",
   async (payload, thunkAPI) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': localStorage.getItem('authorization'),
-          'refresh-token': localStorage.getItem('refresh-token')
-
+      const response = await axios.get(
+        `https://jossiya.shop/api/members/`,
+        {
+          headers: {
+            'authorization': accessToken,
+            "refresh-Token": refreshToken,
+          },
         }
-      }
-      // const { data } = await instance.post(`/posts/${payload.id}`, payload)
-      const { data } = await axios.post('https://jossiya.shop/api/members', payload, config)
-      return thunkAPI.fulfillWithValue(data)
+      );
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error)
+      return thunkAPI.fulfillWithValue(error);
     }
   }
 );
 
-const initialState = {
-  userFriend: [],
-  isLoading: false,
-  error: null,
-};
-
 
 const friendSlice = createSlice({
-  name: "myinfo",
+  name: "friend",
   initialState,
   extraReducers: {
     [__postPlusUser.fulfilled]: (state, action) => {
-      state.isLoading = false;
+      state.isLoading = false; 
       state.userFriend = action.payload;
     },
 
@@ -85,13 +86,5 @@ const friendSlice = createSlice({
   },
 });
 
+
 export default friendSlice.reducer;
-
-
-
-
-
-
-
-
-

@@ -28,6 +28,7 @@ const Register = () => {
 
   // 유효성 검사
   // id=영대소문, 숫자 6~20자
+
   const checkId = loginId.length >= 6 && loginId.length <= 20;
 
   // pw-영대소문, 숫자, 특수문자 8~16자
@@ -44,6 +45,7 @@ const Register = () => {
     if (password === passwordConfirm) {
       if (checkId && checkPassword && checkNickname && checkPhoneNumber) {
         dispatch(signUp(userInfo));
+        navigate('/login');
       } else {
         alert('입력란을 확인해주세요');
       }
@@ -65,17 +67,18 @@ const Register = () => {
     <MainContainer>
       <InputWarp>
         <h1>회원가입</h1>
-        <p>아이디</p>
+        <p>이메일</p>
         <InputContainer>
           <Input
             placeholder="아이디 입력" //이메일
             name="loginName"
-            type="text"
+            type="email"
             value={loginId}
             onChange={(e) =>
-              //setEmail(e.target.value.replace(/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/gi, ""))
+              //setLoginId(e.target.value.replace(/^[a-zA-Z0-9]+@[a-zA-Z]+.[a-z]+${4,12}$/gi, ""))
               // setUsername(e.target.value
               //   .replace(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/))
+
               setLoginId(e.target.value)
             }
           />

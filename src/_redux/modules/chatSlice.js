@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const accessToken = localStorage.getItem("authorization");
-const refreshToken = localStorage.getItem("refresh-token");
+const refreshToken = localStorage.getItem("refresh-Token");
 
 const initialState = {
   roomId: "",
@@ -13,25 +13,55 @@ const initialState = {
     }
   ],
   chat: {},
+  chat: [],
+  users: [
+    {
+      memberId: 0,
+      loginId: "",
+      nickName: "",
+      password: "",
+      phoneNumber: ""
+    }
+  ],
   isLoading: false,
   error: null,
 };
 
+//유저 상세 검색
+export const memberInfo = createAsyncThunk(
+  "get/memberinfo",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        'https://jossiya.shop/api/member/memberInfo',
+        {
+          headers: {
+            contentType: "application/json",
+            "authorization": accessToken,
+            "refresh-Token": refreshToken,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 //채팅방 생성
 export const addChatroom = createAsyncThunk(
   "post/chatroom",
   async (payload, { rejectWithValue }) => {
-    // console.log(payload)
     try {
       const response = await axios.post(
-        'https://jossiya.shop/ws/api/rooms',
+        'https://jossiya.shop/api/rooms',
         payload,
         {
           headers: {
             contentType: "application/json",
-            "authorization": accessToken,
-            "refresh-token": refreshToken,
+            authorization: accessToken,
+            "refresh-Token": refreshToken,
           },
         }
       );
@@ -43,7 +73,7 @@ export const addChatroom = createAsyncThunk(
 );
 
 
-//이전 채팅내용 가져오기
+//메시지 불러오기
 export const getMessage = createAsyncThunk(
   "get/chat",
   async (payload, { rejectWithValue }) => {
@@ -52,7 +82,7 @@ export const getMessage = createAsyncThunk(
         headers: {
           contentType: "application/json",
           "authorization": accessToken,
-          "refresh-token": refreshToken,
+          "refresh-Token": refreshToken,
         },
       });
       return response.data;
@@ -67,13 +97,12 @@ export const getMessage = createAsyncThunk(
 export const getChatRoom = createAsyncThunk(
   "get/chatroom",
   async (payload, { rejectWithValue }) => {
-
     try {
       const response = await axios.get('https://jossiya.shop/api/rooms', {
         headers: {
           contentType: "application/json",
           "authorization": accessToken,
-          "refresh-token": refreshToken,
+          "refresh-Token": refreshToken,
         },
       });
       return response.data;
@@ -88,14 +117,14 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, { payload }) => {
-      state.chat = [payload, ...state.chat];
+      state.chat = [ ...state.chat ,payload];
     },
   },
   extraReducers: {
-    // [addChatroom.fulfilled]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   state.chat = payload;
-    // },
+    [addChatroom.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.chat = payload;
+    },
     [getMessage.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.chat = payload;
@@ -103,6 +132,10 @@ export const chatSlice = createSlice({
     [getChatRoom.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.chatRoom = payload;
+    },
+    [memberInfo.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.users = payload;
     },
   },
 });

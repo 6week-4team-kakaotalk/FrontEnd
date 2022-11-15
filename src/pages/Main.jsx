@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import MainModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-// import { __getPlusUser } from '../_redux/modules/friend_info';
-// import { __getUserInfo } from '../_redux/modules/user_info';
-import Navigation from '../components/header/Navigation';
+import { BsDiscFill } from 'react-icons/bs';
+import { __postPlusUser, __getPlusUser } from '../_redux/modules/friend_info';
 
 const Main = () => {
   //const [modalIsOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState('');
   const [modal, setModal] = useState(false);
   const [search, setSearch] = useState('');
   const [searchVal, setSearchVal] = useState('');
-
+  const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
+  const searchRef = useRef(null);
 
-  const userInfo = useSelector((state) => state);
-  console.log(userInfo);
-  // const friendInfo = useSelector((state) => state.friend.userFriend);
+  const friendInfo = useSelector((state) => state.friend.userFriend);
+  // console.log(friendInfo);
 
   // useEffect(() => {
   //   dispatch(__getUserInfo());
@@ -25,11 +25,7 @@ const Main = () => {
 
   // useEffect(() => {
   //   dispatch(__getPlusUser());
-  // });
-
-  // useEffect(() => {
-  //   //dispatch get친구정보
-  // });
+  // }, []);
 
   // const plusUserId = () => {
   //   dispatch(__postPlusUser(userName));
@@ -47,9 +43,22 @@ const Main = () => {
   //   setSearchVal(e.target.value);
   // }, 300);
 
+  const handleFormData = (e) => {
+    e.preventDefault();
+    dispatch(__postPlusUser(userName));
+  };
+
   const handModal = () => {
     setModal(!modal);
   };
+
+  const searchFriendName =
+    friendInfo &&
+    friendInfo.filter((friend) => {
+      return friend.nickName.toLowerCase().includes(searchVal.toLowerCase());
+    });
+
+  console.log(searchFriendName.nickName);
 
   return (
     <Layout>
@@ -95,11 +104,11 @@ const Main = () => {
                   setSearch(e.target.value);
                 }}
               />
-              <ButtonSearch>찾기</ButtonSearch>
+              <ButtonSearch onClick={handleFormData}>찾기</ButtonSearch>
             </ModalSearch>
 
             <ModalPro>
-              <ModalProfile></ModalProfile>
+              <ModalProfile />
               <ModalProfileName>곽항해</ModalProfileName>
               <ButtonPlus
                 onClick={() => {
@@ -175,12 +184,12 @@ const ModalPro = styled.div`
 
 const ModalProfile = styled.div`
   background-image: url('https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg');
-  border-radius: 18px;
-  width: 100%;
-  max-width: 50px;
-  height: 100%;
-  max-height: 50px;
-  margin-left: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: left;
   align-items: center;
