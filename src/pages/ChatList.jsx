@@ -172,6 +172,20 @@ const MainContainer = styled.div`
   max-width: 400px;
   box-shadow: 1px 1px 0px 0px #ebebeb;
 `;
+const CreatChateBox = styled.div`
+  display: flex;
+`;
+const CButton = styled.button`
+  border: none;
+  outline: none;
+  width: 50px;
+  height: 50px;
+  background-color: #362c00;
+  border-radius: 100%;
+  margin-left: 10px;
+  color: #fff;
+  cursor: pointer;
+`;
 
 const ChatsBox = styled.div`
   display: flex;
